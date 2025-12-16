@@ -136,20 +136,31 @@ def main():
         requests_data = cursor.fetchall()
         requests = [dict(zip(columns, row)) for row in requests_data]
         
-        # Debug: show first column names
-        if columns:
-            print(f"   First few columns: {columns[:5]}")
-            # Find the ID column
-            id_col = None
-            for col in columns:
-                if col.lower() == 'requestid':
-                    id_col = col
-                    break
-            if id_col:
-                print(f"   Found ID column: '{id_col}'")
-            else:
-                print(f"   ⚠️  Warning: Could not find requestid column")
-                print(f"   Available columns: {columns[:10]}")
+        # Clean column names (remove BOM and normalize)
+        # CSV might have BOM character at start (\ufeff)
+        cleaned_columns = []
+        column_mapping = {}
+        for col in columns:
+            # Remove BOM and strip whitespace
+            clean_col = col.lstrip('\ufeff').strip()
+            cleaned_columns.append(clean_col)
+            column_mapping[clean_col.lower()] = col  # Map clean name to original
+        
+        # Find the ID column (handle BOM)
+        id_col_original = None
+        for col in columns:
+            clean_col = col.lstrip('\ufeff').strip()
+            if clean_col.lower() == 'requestid':
+                id_col_original = col
+                break
+        
+        if not id_col_original:
+            print(f"   ⚠️  Warning: Could not find requestid column")
+            print(f"   Available columns: {columns[:10]}")
+            # Try first column as fallback
+            if columns:
+                id_col_original = columns[0]
+                print(f"   Using first column as ID: '{id_col_original}'")
         
         print(f"✓ Loaded {len(requests):,} requests from database")
         logger.info(f"Loaded {len(requests)} requests")
@@ -174,21 +185,14 @@ def main():
         print()
         documents = []
         
-        # Find the actual ID column name from the columns we got
-        id_column_name = None
-        for col in columns:
-            if col.lower() == 'requestid':
-                id_column_name = col
-                break
-        
-        if not id_column_name:
+        # Use the ID column we found earlier (handles BOM character)
+        if not id_col_original:
             print("❌ ERROR: Could not find requestid column!")
-            print(f"   Available columns: {columns[:10]}")
             return 1
         
         for req in tqdm(requests, desc="Preparing documents"):
-            # Get request ID using the actual column name from database
-            request_id = str(req[id_column_name]) if req.get(id_column_name) else None
+            # Get request ID using the original column name (with BOM if present)
+            request_id = str(req[id_col_original]) if req.get(id_col_original) else None
             
             if not request_id:
                 continue
