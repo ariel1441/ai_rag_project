@@ -57,9 +57,30 @@ def combine_text_fields_weighted(request: Dict) -> str:
     """
     fields = []
     
-    # Helper function to safely get value
+    # Helper function to safely get value (handles BOM and case variations)
     def get_value(key):
-        value = request.get(key) or request.get(key.lower())
+        # Try exact match first
+        value = request.get(key)
+        
+        # Try lowercase
+        if value is None:
+            value = request.get(key.lower())
+        
+        # Try with BOM (in case first column has BOM)
+        if value is None:
+            bom_key = '\ufeff' + key
+            value = request.get(bom_key) or request.get(bom_key.lower())
+        
+        # Try all keys case-insensitively (for CSV import variations)
+        if value is None:
+            key_lower = key.lower()
+            for req_key in request.keys():
+                # Remove BOM and compare
+                clean_key = req_key.lstrip('\ufeff').strip().lower()
+                if clean_key == key_lower:
+                    value = request[req_key]
+                    break
+        
         if value is None:
             return None
         # Convert to string and strip
