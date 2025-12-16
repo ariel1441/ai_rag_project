@@ -129,9 +129,26 @@ def main():
         
         # Load requests
         print("Step 5: Loading requests from database...")
+        # First check what the ID column is called
         cursor.execute("""
+            SELECT column_name 
+            FROM information_schema.columns 
+            WHERE table_schema = 'public' 
+            AND table_name = 'requests'
+            AND column_name IN ('requestid', 'request_id', 'id')
+            ORDER BY CASE column_name 
+                WHEN 'requestid' THEN 1 
+                WHEN 'request_id' THEN 2 
+                WHEN 'id' THEN 3 
+            END
+            LIMIT 1;
+        """)
+        id_col_result = cursor.fetchone()
+        id_column = id_col_result[0] if id_col_result else 'requestid'
+        
+        cursor.execute(f"""
             SELECT * FROM requests
-            ORDER BY requestid;
+            ORDER BY "{id_column}";
         """)
         
         columns = [desc[0] for desc in cursor.description]
