@@ -1,0 +1,1106 @@
+====================================================================================================
+COMPREHENSIVE SEARCH TEST REPORT
+====================================================================================================
+
+Total Tests: 130
+Successful: 0 (0.0%)
+Failed: 130 (100.0%)
+
+====================================================================================================
+RESULTS BY TEST TYPE
+====================================================================================================
+
+--- COMPLEX Tests (4 tests) ---
+Success Rate: 0/4 (0.0%)
+Average Search Time: 0.00ms
+Average Parse Time: 0.08ms
+Accuracy Distribution:
+  unknown: 4
+
+--- COUNT Tests (5 tests) ---
+Success Rate: 0/5 (0.0%)
+Average Search Time: 303.73ms
+Average Parse Time: 0.15ms
+Accuracy Distribution:
+  acceptable: 2
+  questionable: 1
+  unknown: 2
+
+--- DATE Tests (3 tests) ---
+Success Rate: 0/3 (0.0%)
+Average Search Time: 0.00ms
+Average Parse Time: 0.14ms
+Accuracy Distribution:
+  unknown: 3
+
+--- GENERAL Tests (26 tests) ---
+Success Rate: 0/26 (0.0%)
+Average Search Time: 194.14ms
+Average Parse Time: 0.14ms
+Accuracy Distribution:
+  unknown: 26
+
+--- PERSON Tests (41 tests) ---
+Success Rate: 0/41 (0.0%)
+Average Search Time: 925.99ms
+Average Parse Time: 0.20ms
+Accuracy Distribution:
+  acceptable: 21
+  poor: 1
+  questionable: 14
+  unknown: 5
+
+--- PROJECT Tests (3 tests) ---
+Success Rate: 0/3 (0.0%)
+Average Search Time: 669.88ms
+Average Parse Time: 0.13ms
+Accuracy Distribution:
+  acceptable: 1
+  questionable: 1
+  unknown: 1
+
+--- SIMILAR Tests (4 tests) ---
+Success Rate: 0/4 (0.0%)
+Average Search Time: 170.94ms
+Average Parse Time: 0.11ms
+Accuracy Distribution:
+  unknown: 4
+
+--- STATUS Tests (14 tests) ---
+Success Rate: 0/14 (0.0%)
+Average Search Time: 133.14ms
+Average Parse Time: 0.19ms
+Accuracy Distribution:
+  exact: 14
+
+--- TYPE Tests (26 tests) ---
+Success Rate: 0/26 (0.0%)
+Average Search Time: 145.64ms
+Average Parse Time: 0.16ms
+Accuracy Distribution:
+  exact: 24
+  unknown: 2
+
+--- URGENT Tests (4 tests) ---
+Success Rate: 0/4 (0.0%)
+Average Search Time: 334.39ms
+Average Parse Time: 0.19ms
+Accuracy Distribution:
+  unknown: 4
+
+====================================================================================================
+PERFORMANCE METRICS
+====================================================================================================
+
+Search Time:
+  Min: 0.00ms
+  Max: 5837.10ms
+  Avg: 417.03ms
+  Median: 175.82ms
+
+Parse Time:
+  Min: 0.06ms
+  Max: 1.37ms
+  Avg: 0.17ms
+
+====================================================================================================
+DETAILED TEST RESULTS
+====================================================================================================
+
+1. ❌ פניות מאור גלילי
+   Type: person, Intent: person
+   Search Time: 5837.10ms
+   Results: 20 returned, 142 total
+   DB Count: 34
+   Ratio: 4.18x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 4.18 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+2. ❌ בקשות מאור גלילי
+   Type: person, Intent: person
+   Search Time: 984.12ms
+   Results: 20 returned, 169 total
+   DB Count: 34
+   Ratio: 4.97x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 4.97 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+3. ❌ כמה פניות יש מאור גלילי?
+   Type: person, Intent: person
+   Search Time: 927.09ms
+   Results: 20 returned, 112 total
+   DB Count: 34
+   Ratio: 3.29x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 3.29 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+4. ❌ כמה בקשות יש מאור גלילי?
+   Type: person, Intent: person
+   Search Time: 1033.76ms
+   Results: 20 returned, 104 total
+   DB Count: 34
+   Ratio: 3.06x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 3.06 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+5. ❌ תביא לי פניות מאור גלילי
+   Type: person, Intent: person
+   Search Time: 1497.64ms
+   Results: 20 returned, 191 total
+   DB Count: 34
+   Ratio: 5.62x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 5.62 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+6. ❌ תביא לי בקשות מאור גלילי
+   Type: person, Intent: person
+   Search Time: 1074.36ms
+   Results: 20 returned, 270 total
+   DB Count: 34
+   Ratio: 7.94x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 7.94 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+7. ❌ הראה לי פניות מאור גלילי
+   Type: person, Intent: person
+   Search Time: 1128.95ms
+   Results: 20 returned, 154 total
+   DB Count: 34
+   Ratio: 4.53x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 4.53 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+8. ❌ מצא לי פניות מאור גלילי
+   Type: person, Intent: person
+   Search Time: 906.17ms
+   Results: 20 returned, 122 total
+   DB Count: 34
+   Ratio: 3.59x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 3.59 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+9. ❌ פניות של אור גלילי
+   Type: person, Intent: person
+   Search Time: 992.10ms
+   Results: 20 returned, 149 total
+   DB Count: 34
+   Ratio: 4.38x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 4.38 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+10. ❌ בקשות של אור גלילי
+   Type: person, Intent: person
+   Search Time: 1235.93ms
+   Results: 20 returned, 165 total
+   DB Count: 34
+   Ratio: 4.85x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 4.85 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+11. ❌ בקשות מ-אור גלילי
+   Type: person, Intent: person
+   Search Time: 865.89ms
+   Results: 20 returned, 194 total
+   DB Count: 34
+   Ratio: 5.71x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 5.71 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+12. ❌ פניות מ-אור גלילי
+   Type: person, Intent: person
+   Search Time: 1341.46ms
+   Results: 20 returned, 176 total
+   DB Count: 34
+   Ratio: 5.18x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 5.18 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+13. ❌ אור גלילי
+   Type: person, Intent: general
+   Search Time: 181.12ms
+   Results: 20 returned, 264 total
+   ⚠️  Intent mismatch: expected 'person', got 'general'
+
+14. ❌ כל הפניות מאור גלילי
+   Type: person, Intent: person
+   Search Time: 827.37ms
+   Results: 20 returned, 157 total
+   DB Count: 34
+   Ratio: 4.62x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 4.62 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+15. ❌ כל הבקשות מאור גלילי
+   Type: person, Intent: person
+   Search Time: 843.33ms
+   Results: 20 returned, 188 total
+   DB Count: 34
+   Ratio: 5.53x
+   Accuracy: questionable
+   ⚠️  'אור גלילי' is a project name, not person name
+   ⚠️  Count ratio 5.53 is outside ideal range
+   ⚠️  Person name not found in top 5 results
+
+16. ❌ פניות מיניב ליבוביץ
+   Type: person, Intent: person
+   Search Time: 758.76ms
+   Results: 20 returned, 118 total
+   DB Count: 225
+   Ratio: 0.52x
+   Accuracy: acceptable
+
+17. ❌ בקשות מיניב ליבוביץ
+   Type: person, Intent: person
+   Search Time: 748.41ms
+   Results: 20 returned, 134 total
+   DB Count: 225
+   Ratio: 0.60x
+   Accuracy: acceptable
+
+18. ❌ כמה פניות יש מיניב ליבוביץ?
+   Type: person, Intent: person
+   Search Time: 780.66ms
+   Results: 20 returned, 97 total
+   DB Count: 225
+   Ratio: 0.43x
+   Accuracy: acceptable
+
+19. ❌ כמה בקשות יש מיניב ליבוביץ?
+   Type: person, Intent: person
+   Search Time: 819.77ms
+   Results: 20 returned, 99 total
+   DB Count: 225
+   Ratio: 0.44x
+   Accuracy: acceptable
+
+20. ❌ תביא לי פניות מיניב ליבוביץ
+   Type: person, Intent: person
+   Search Time: 817.56ms
+   Results: 20 returned, 207 total
+   DB Count: 225
+   Ratio: 0.92x
+   Accuracy: acceptable
+
+21. ❌ הראה לי פניות מיניב ליבוביץ
+   Type: person, Intent: person
+   Search Time: 764.29ms
+   Results: 20 returned, 239 total
+   DB Count: 225
+   Ratio: 1.06x
+   Accuracy: acceptable
+
+22. ❌ פניות של יניב ליבוביץ
+   Type: person, Intent: person
+   Search Time: 765.28ms
+   Results: 20 returned, 155 total
+   DB Count: 225
+   Ratio: 0.69x
+   Accuracy: acceptable
+
+23. ❌ בקשות של יניב ליבוביץ
+   Type: person, Intent: person
+   Search Time: 810.93ms
+   Results: 20 returned, 193 total
+   DB Count: 225
+   Ratio: 0.86x
+   Accuracy: acceptable
+
+24. ❌ בקשות מ-יניב ליבוביץ
+   Type: person, Intent: person
+   Search Time: 804.16ms
+   Results: 20 returned, 150 total
+   DB Count: 225
+   Ratio: 0.67x
+   Accuracy: acceptable
+
+25. ❌ פניות מ-יניב ליבוביץ
+   Type: person, Intent: person
+   Search Time: 806.91ms
+   Results: 20 returned, 81 total
+   DB Count: 225
+   Ratio: 0.36x
+   Accuracy: acceptable
+
+26. ❌ יניב ליבוביץ
+   Type: person, Intent: general
+   Search Time: 155.25ms
+   Results: 20 returned, 338 total
+   ⚠️  Intent mismatch: expected 'person', got 'general'
+
+27. ❌ כל הפניות מיניב ליבוביץ
+   Type: person, Intent: person
+   Search Time: 769.53ms
+   Results: 20 returned, 200 total
+   DB Count: 0
+   Ratio: infx
+   Accuracy: poor
+   ⚠️  Person name not found in top 5 results
+   ❌ Count ratio inf is very different
+
+28. ❌ פניות מאוקסנה כלפון
+   Type: person, Intent: person
+   Search Time: 912.27ms
+   Results: 20 returned, 491 total
+   DB Count: 186
+   Ratio: 2.64x
+   Accuracy: acceptable
+
+29. ❌ בקשות מאוקסנה כלפון
+   Type: person, Intent: person
+   Search Time: 808.79ms
+   Results: 20 returned, 515 total
+   DB Count: 186
+   Ratio: 2.77x
+   Accuracy: acceptable
+
+30. ❌ כמה פניות יש מאוקסנה כלפון?
+   Type: person, Intent: person
+   Search Time: 812.81ms
+   Results: 20 returned, 341 total
+   DB Count: 186
+   Ratio: 1.83x
+   Accuracy: acceptable
+
+31. ❌ תביא לי פניות מאוקסנה כלפון
+   Type: person, Intent: person
+   Search Time: 750.04ms
+   Results: 20 returned, 498 total
+   DB Count: 186
+   Ratio: 2.68x
+   Accuracy: acceptable
+
+32. ❌ הראה לי פניות מאוקסנה כלפון
+   Type: person, Intent: person
+   Search Time: 767.97ms
+   Results: 20 returned, 500 total
+   DB Count: 186
+   Ratio: 2.69x
+   Accuracy: acceptable
+
+33. ❌ פניות של אוקסנה כלפון
+   Type: person, Intent: person
+   Search Time: 762.16ms
+   Results: 20 returned, 409 total
+   DB Count: 186
+   Ratio: 2.20x
+   Accuracy: acceptable
+
+34. ❌ אוקסנה כלפון
+   Type: person, Intent: general
+   Search Time: 161.80ms
+   Results: 20 returned, 937 total
+   ⚠️  Intent mismatch: expected 'person', got 'general'
+
+35. ❌ פניות ממשה אוגלבו
+   Type: person, Intent: person
+   Search Time: 765.40ms
+   Results: 20 returned, 547 total
+   DB Count: 704
+   Ratio: 0.78x
+   Accuracy: acceptable
+
+36. ❌ בקשות ממשה אוגלבו
+   Type: person, Intent: person
+   Search Time: 749.78ms
+   Results: 20 returned, 528 total
+   DB Count: 704
+   Ratio: 0.75x
+   Accuracy: acceptable
+
+37. ❌ כמה פניות יש ממשה אוגלבו?
+   Type: person, Intent: person
+   Search Time: 1082.23ms
+   Results: 20 returned, 307 total
+   DB Count: 704
+   Ratio: 0.44x
+   Accuracy: acceptable
+
+38. ❌ תביא לי פניות ממשה אוגלבו
+   Type: person, Intent: person
+   Search Time: 786.22ms
+   Results: 20 returned, 481 total
+   DB Count: 704
+   Ratio: 0.68x
+   Accuracy: acceptable
+
+39. ❌ משה אוגלבו
+   Type: person, Intent: general
+   Search Time: 179.66ms
+   Results: 20 returned, 593 total
+   ⚠️  Intent mismatch: expected 'person', got 'general'
+
+40. ❌ פניות מאתר חיצוני תמר
+   Type: person, Intent: person
+   Search Time: 782.47ms
+   Results: 20 returned, 249 total
+   DB Count: 548
+   Ratio: 0.45x
+   Accuracy: acceptable
+
+41. ❌ בקשות מTamarApp
+   Type: person, Intent: person
+   Search Time: 166.30ms
+   Results: 20 returned, 320 total
+
+42. ❌ בקשות מסוג 4
+   Type: type, Intent: type
+   Search Time: 186.72ms
+   Results: 20 returned, 3731 total
+   DB Count: 3731
+   Ratio: 1.00x
+   Accuracy: exact
+
+43. ❌ פניות מסוג 4
+   Type: type, Intent: type
+   Search Time: 217.54ms
+   Results: 20 returned, 3731 total
+   DB Count: 3731
+   Ratio: 1.00x
+   Accuracy: exact
+
+44. ❌ בקשות מסוג 1
+   Type: type, Intent: type
+   Search Time: 147.96ms
+   Results: 20 returned, 2114 total
+   DB Count: 2114
+   Ratio: 1.00x
+   Accuracy: exact
+
+45. ❌ פניות מסוג 1
+   Type: type, Intent: type
+   Search Time: 140.80ms
+   Results: 20 returned, 2114 total
+   DB Count: 2114
+   Ratio: 1.00x
+   Accuracy: exact
+
+46. ❌ בקשות מסוג 2
+   Type: type, Intent: type
+   Search Time: 90.89ms
+   Results: 20 returned, 999 total
+   DB Count: 999
+   Ratio: 1.00x
+   Accuracy: exact
+
+47. ❌ פניות מסוג 2
+   Type: type, Intent: type
+   Search Time: 90.43ms
+   Results: 20 returned, 999 total
+   DB Count: 999
+   Ratio: 1.00x
+   Accuracy: exact
+
+48. ❌ בקשות מסוג 3
+   Type: type, Intent: type
+   Search Time: 106.94ms
+   Results: 20 returned, 1339 total
+   DB Count: 1339
+   Ratio: 1.00x
+   Accuracy: exact
+
+49. ❌ פניות מסוג 3
+   Type: type, Intent: type
+   Search Time: 101.11ms
+   Results: 20 returned, 1339 total
+   DB Count: 1339
+   Ratio: 1.00x
+   Accuracy: exact
+
+50. ❌ כמה פניות יש מסוג 4?
+   Type: type, Intent: type
+   Search Time: 195.44ms
+   Results: 20 returned, 3731 total
+   DB Count: 3731
+   Ratio: 1.00x
+   Accuracy: exact
+
+51. ❌ כמה בקשות יש מסוג 4?
+   Type: type, Intent: type
+   Search Time: 182.82ms
+   Results: 20 returned, 3731 total
+   DB Count: 3731
+   Ratio: 1.00x
+   Accuracy: exact
+
+52. ❌ כמה פניות יש מסוג 1?
+   Type: type, Intent: type
+   Search Time: 134.33ms
+   Results: 20 returned, 2114 total
+   DB Count: 2114
+   Ratio: 1.00x
+   Accuracy: exact
+
+53. ❌ כמה בקשות יש מסוג 1?
+   Type: type, Intent: type
+   Search Time: 143.71ms
+   Results: 20 returned, 2114 total
+   DB Count: 2114
+   Ratio: 1.00x
+   Accuracy: exact
+
+54. ❌ כמה פניות יש מסוג 2?
+   Type: type, Intent: type
+   Search Time: 103.11ms
+   Results: 20 returned, 999 total
+   DB Count: 999
+   Ratio: 1.00x
+   Accuracy: exact
+
+55. ❌ כמה פניות יש מסוג 3?
+   Type: type, Intent: type
+   Search Time: 98.63ms
+   Results: 20 returned, 1339 total
+   DB Count: 1339
+   Ratio: 1.00x
+   Accuracy: exact
+
+56. ❌ תביא לי בקשות מסוג 4
+   Type: type, Intent: type
+   Search Time: 198.62ms
+   Results: 20 returned, 3731 total
+   DB Count: 3731
+   Ratio: 1.00x
+   Accuracy: exact
+
+57. ❌ תביא לי פניות מסוג 4
+   Type: type, Intent: type
+   Search Time: 184.99ms
+   Results: 20 returned, 3731 total
+   DB Count: 3731
+   Ratio: 1.00x
+   Accuracy: exact
+
+58. ❌ הראה לי פניות מסוג 1
+   Type: type, Intent: type
+   Search Time: 143.58ms
+   Results: 20 returned, 2114 total
+   DB Count: 2114
+   Ratio: 1.00x
+   Accuracy: exact
+
+59. ❌ מצא לי בקשות מסוג 2
+   Type: type, Intent: type
+   Search Time: 103.94ms
+   Results: 20 returned, 999 total
+   DB Count: 999
+   Ratio: 1.00x
+   Accuracy: exact
+
+60. ❌ כל הבקשות מסוג 4
+   Type: type, Intent: type
+   Search Time: 201.02ms
+   Results: 20 returned, 3731 total
+   DB Count: 3731
+   Ratio: 1.00x
+   Accuracy: exact
+
+61. ❌ כל הפניות מסוג 1
+   Type: type, Intent: type
+   Search Time: 133.90ms
+   Results: 20 returned, 2114 total
+   DB Count: 2114
+   Ratio: 1.00x
+   Accuracy: exact
+
+62. ❌ סוג 4
+   Type: type, Intent: type
+   Search Time: 187.25ms
+   Results: 20 returned, 3731 total
+   DB Count: 3731
+   Ratio: 1.00x
+   Accuracy: exact
+
+63. ❌ סוג 1
+   Type: type, Intent: type
+   Search Time: 143.79ms
+   Results: 20 returned, 2114 total
+   DB Count: 2114
+   Ratio: 1.00x
+   Accuracy: exact
+
+64. ❌ סוג 2
+   Type: type, Intent: type
+   Search Time: 99.17ms
+   Results: 20 returned, 999 total
+   DB Count: 999
+   Ratio: 1.00x
+   Accuracy: exact
+
+65. ❌ סוג 3
+   Type: type, Intent: type
+   Search Time: 96.93ms
+   Results: 20 returned, 1339 total
+   DB Count: 1339
+   Ratio: 1.00x
+   Accuracy: exact
+
+66. ❌ בקשות type 4
+   Type: type, Intent: type
+   Search Time: 208.51ms
+   Results: 20 returned, 3731 total
+
+67. ❌ פניות type 1
+   Type: type, Intent: type
+   Search Time: 144.52ms
+   Results: 20 returned, 2114 total
+
+68. ❌ בקשות בסטטוס 1
+   Type: status, Intent: status
+   Search Time: 119.88ms
+   Results: 20 returned, 1268 total
+   DB Count: 1268
+   Ratio: 1.00x
+   Accuracy: exact
+
+69. ❌ פניות בסטטוס 1
+   Type: status, Intent: status
+   Search Time: 128.73ms
+   Results: 20 returned, 1268 total
+   DB Count: 1268
+   Ratio: 1.00x
+   Accuracy: exact
+
+70. ❌ בקשות בסטטוס 2
+   Type: status, Intent: status
+   Search Time: 98.32ms
+   Results: 19 returned, 648 total
+   DB Count: 648
+   Ratio: 1.00x
+   Accuracy: exact
+
+71. ❌ פניות בסטטוס 2
+   Type: status, Intent: status
+   Search Time: 105.05ms
+   Results: 19 returned, 648 total
+   DB Count: 648
+   Ratio: 1.00x
+   Accuracy: exact
+
+72. ❌ בקשות בסטטוס 7
+   Type: status, Intent: status
+   Search Time: 81.29ms
+   Results: 20 returned, 769 total
+   DB Count: 769
+   Ratio: 1.00x
+   Accuracy: exact
+
+73. ❌ פניות בסטטוס 7
+   Type: status, Intent: status
+   Search Time: 86.54ms
+   Results: 20 returned, 769 total
+   DB Count: 769
+   Ratio: 1.00x
+   Accuracy: exact
+
+74. ❌ בקשות בסטטוס 10
+   Type: status, Intent: status
+   Search Time: 200.39ms
+   Results: 20 returned, 4217 total
+   DB Count: 4217
+   Ratio: 1.00x
+   Accuracy: exact
+
+75. ❌ פניות בסטטוס 10
+   Type: status, Intent: status
+   Search Time: 180.85ms
+   Results: 20 returned, 4217 total
+   DB Count: 4217
+   Ratio: 1.00x
+   Accuracy: exact
+
+76. ❌ כמה פניות יש בסטטוס 1?
+   Type: status, Intent: status
+   Search Time: 109.34ms
+   Results: 20 returned, 1268 total
+   DB Count: 1268
+   Ratio: 1.00x
+   Accuracy: exact
+
+77. ❌ כמה בקשות יש בסטטוס 1?
+   Type: status, Intent: status
+   Search Time: 105.99ms
+   Results: 20 returned, 1268 total
+   DB Count: 1268
+   Ratio: 1.00x
+   Accuracy: exact
+
+78. ❌ כמה פניות יש בסטטוס 10?
+   Type: status, Intent: status
+   Search Time: 200.29ms
+   Results: 20 returned, 4217 total
+   DB Count: 4217
+   Ratio: 1.00x
+   Accuracy: exact
+
+79. ❌ תביא לי בקשות בסטטוס 2
+   Type: status, Intent: status
+   Search Time: 108.30ms
+   Results: 19 returned, 648 total
+   DB Count: 648
+   Ratio: 1.00x
+   Accuracy: exact
+
+80. ❌ הראה לי פניות בסטטוס 7
+   Type: status, Intent: status
+   Search Time: 114.04ms
+   Results: 20 returned, 769 total
+   DB Count: 769
+   Ratio: 1.00x
+   Accuracy: exact
+
+81. ❌ כל הבקשות בסטטוס 10
+   Type: status, Intent: status
+   Search Time: 224.99ms
+   Results: 20 returned, 4217 total
+   DB Count: 4217
+   Ratio: 1.00x
+   Accuracy: exact
+
+82. ❌ כמה פניות יש?
+   Type: count, Intent: person
+   Search Time: 178.78ms
+   Results: 20 returned, 293 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+83. ❌ כמה בקשות יש?
+   Type: count, Intent: person
+   Search Time: 182.02ms
+   Results: 20 returned, 332 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+84. ❌ כמה פניות יש מאור גלילי?
+   Type: count, Intent: person
+   Search Time: 830.74ms
+   Results: 20 returned, 112 total
+   DB Count: 34
+   Ratio: 3.29x
+   Accuracy: questionable
+   ⚠️  Count ratio 3.29 is outside ideal range
+
+85. ❌ כמה בקשות יש מסוג 4?
+   Type: count, Intent: type
+   Search Time: 205.29ms
+   Results: 20 returned, 3731 total
+   DB Count: 3731
+   Ratio: 1.00x
+   Accuracy: acceptable
+
+86. ❌ כמה פניות יש בסטטוס 1?
+   Type: count, Intent: status
+   Search Time: 121.80ms
+   Results: 20 returned, 1268 total
+   DB Count: 1268
+   Ratio: 1.00x
+   Accuracy: acceptable
+
+87. ❌ פניות דומות ל221000226
+   Type: similar, Intent: person
+   Search Time: 172.46ms
+   Results: 20 returned, 91 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+88. ❌ בקשות דומות ל211000001
+   Type: similar, Intent: person
+   Search Time: 171.91ms
+   Results: 20 returned, 104 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+89. ❌ תביא לי פניות דומות ל221000226
+   Type: similar, Intent: person
+   Search Time: 171.51ms
+   Results: 20 returned, 237 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+90. ❌ דומות ל221000226
+   Type: similar, Intent: general
+   Search Time: 167.87ms
+   Results: 20 returned, 62 total
+
+91. ❌ תיאום תכנון
+   Type: general, Intent: general
+   Search Time: 171.86ms
+   Results: 20 returned, 342 total
+
+92. ❌ תכנון
+   Type: general, Intent: general
+   Search Time: 159.93ms
+   Results: 19 returned, 262 total
+
+93. ❌ תכנון עירוני
+   Type: general, Intent: general
+   Search Time: 165.47ms
+   Results: 20 returned, 407 total
+
+94. ❌ אלינור
+   Type: general, Intent: general
+   Search Time: 161.33ms
+   Results: 20 returned, 366 total
+
+95. ❌ פרויקטים
+   Type: general, Intent: project
+   Search Time: 508.58ms
+   Results: 20 returned, 121 total
+   ⚠️  Intent mismatch: expected 'general', got 'project'
+
+96. ❌ בקשות דחופות
+   Type: general, Intent: general
+   Search Time: 130.05ms
+   Results: 0 returned, 0 total
+
+97. ❌ פניות אחרונות
+   Type: general, Intent: person
+   Search Time: 168.81ms
+   Results: 20 returned, 176 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+98. ❌ בנייה
+   Type: general, Intent: general
+   Search Time: 174.08ms
+   Results: 20 returned, 666 total
+
+99. ❌ אישור
+   Type: general, Intent: general
+   Search Time: 192.75ms
+   Results: 20 returned, 218 total
+
+100. ❌ בקשות פתוחות
+   Type: general, Intent: person
+   Search Time: 168.58ms
+   Results: 20 returned, 366 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+101. ❌ פניות סגורות
+   Type: general, Intent: person
+   Search Time: 165.49ms
+   Results: 20 returned, 211 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+102. ❌ תיאום
+   Type: general, Intent: general
+   Search Time: 165.56ms
+   Results: 20 returned, 347 total
+
+103. ❌ בקשות חדשות
+   Type: general, Intent: person
+   Search Time: 176.44ms
+   Results: 20 returned, 326 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+104. ❌ פניות ישנות
+   Type: general, Intent: person
+   Search Time: 171.81ms
+   Results: 20 returned, 181 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+105. ❌ בקשות אחרונות
+   Type: general, Intent: person
+   Search Time: 178.47ms
+   Results: 20 returned, 354 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+106. ❌ פניות חדשות
+   Type: general, Intent: person
+   Search Time: 165.06ms
+   Results: 20 returned, 257 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+107. ❌ תכנון ובנייה
+   Type: general, Intent: general
+   Search Time: 169.76ms
+   Results: 20 returned, 567 total
+
+108. ❌ אישורים
+   Type: general, Intent: general
+   Search Time: 170.91ms
+   Results: 20 returned, 333 total
+
+109. ❌ בקשות ממתינות
+   Type: general, Intent: person
+   Search Time: 174.11ms
+   Results: 20 returned, 315 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+110. ❌ פניות ממתינות
+   Type: general, Intent: person
+   Search Time: 165.41ms
+   Results: 20 returned, 162 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+111. ❌ בקשות פעילות
+   Type: general, Intent: person
+   Search Time: 174.85ms
+   Results: 20 returned, 312 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+112. ❌ פניות פעילות
+   Type: general, Intent: person
+   Search Time: 175.82ms
+   Results: 20 returned, 78 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+113. ❌ תכנון עיר
+   Type: general, Intent: general
+   Search Time: 164.61ms
+   Results: 20 returned, 306 total
+
+114. ❌ בנייה עירונית
+   Type: general, Intent: general
+   Search Time: 170.10ms
+   Results: 20 returned, 706 total
+
+115. ❌ אלינור תכנון
+   Type: general, Intent: general
+   Search Time: 165.22ms
+   Results: 20 returned, 541 total
+
+116. ❌ תיאום פרויקטים
+   Type: general, Intent: project
+   Search Time: 492.69ms
+   Results: 20 returned, 257 total
+   ⚠️  Intent mismatch: expected 'general', got 'project'
+
+117. ❌ פרויקט אלינור
+   Type: project, Intent: project
+   Search Time: 540.19ms
+   Results: 20 returned, 261 total
+   DB Count: 101
+   Ratio: 2.58x
+   Accuracy: acceptable
+
+118. ❌ פרויקטים של אלינור
+   Type: project, Intent: person
+   Search Time: 885.48ms
+   Results: 20 returned, 165 total
+   ⚠️  Intent mismatch: expected 'project', got 'person'
+
+119. ❌ בקשות לפרויקט אלינור
+   Type: project, Intent: project
+   Search Time: 583.98ms
+   Results: 20 returned, 442 total
+   DB Count: 101
+   Ratio: 4.38x
+   Accuracy: questionable
+   ⚠️  Count ratio 4.38 is outside ideal range
+
+120. ❌ בקשות דחופות
+   Type: urgent, Intent: general
+   Search Time: 120.16ms
+   Results: 0 returned, 0 total
+
+121. ❌ פניות דחופות
+   Type: urgent, Intent: general
+   Search Time: 131.13ms
+   Results: 0 returned, 0 total
+
+122. ❌ בקשות שדורשות תשובה
+   Type: urgent, Intent: person
+   Search Time: 966.56ms
+   Results: 20 returned, 417 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+
+123. ❌ פניות דחופות מאור גלילי
+   Type: urgent, Intent: person
+   Search Time: 119.73ms
+   Results: 0 returned, 0 total
+
+124. ❌ בקשות מהשבוע האחרון
+   Type: date, Intent: person
+   Search Time: 0.00ms
+   Results: 0 returned, 0 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+   ❌ Exception: syntax error at or near "7"
+LINE 6: ...equeststatusdate::DATE >= CURRENT_DATE - INTERVAL ''7' days'
+                                                               ^
+
+
+125. ❌ פניות מהחודש האחרון
+   Type: date, Intent: person
+   Search Time: 0.00ms
+   Results: 0 returned, 0 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+   ❌ Exception: current transaction is aborted, commands ignored until end of transaction block
+
+
+126. ❌ בקשות מ-2024
+   Type: date, Intent: person
+   Search Time: 0.00ms
+   Results: 0 returned, 0 total
+   ⚠️  Intent mismatch: expected 'general', got 'person'
+   ❌ Exception: current transaction is aborted, commands ignored until end of transaction block
+
+
+127. ❌ תביא לי את כל הפניות מאור גלילי
+   Type: complex, Intent: person
+   Search Time: 0.00ms
+   Results: 0 returned, 0 total
+   ❌ Exception: current transaction is aborted, commands ignored until end of transaction block
+
+
+128. ❌ הצג את כל הבקשות מסוג 4
+   Type: complex, Intent: type
+   Search Time: 0.00ms
+   Results: 0 returned, 0 total
+   ❌ Exception: current transaction is aborted, commands ignored until end of transaction block
+
+
+129. ❌ כמה פניות יש מאור גלילי מסוג 4?
+   Type: complex, Intent: person
+   Search Time: 0.00ms
+   Results: 0 returned, 0 total
+   ❌ Exception: current transaction is aborted, commands ignored until end of transaction block
+
+
+130. ❌ בקשות דחופות מסוג 1
+   Type: complex, Intent: type
+   Search Time: 0.00ms
+   Results: 0 returned, 0 total
+   ❌ Exception: current transaction is aborted, commands ignored until end of transaction block
+
+
+====================================================================================================
+ERRORS SUMMARY
+====================================================================================================
+
+❌ Count ratio inf is very different
+❌ Exception: syntax error at or near "7"
+LINE 6: ...equeststatusdate::DATE >= CURRENT_DATE - INTERVAL ''7' days'
+                                                               ^
+
+❌ Exception: current transaction is aborted, commands ignored until end of transaction block
+
+❌ Exception: current transaction is aborted, commands ignored until end of transaction block
+
+❌ Exception: current transaction is aborted, commands ignored until end of transaction block
+
+❌ Exception: current transaction is aborted, commands ignored until end of transaction block
+
+❌ Exception: current transaction is aborted, commands ignored until end of transaction block
+
+❌ Exception: current transaction is aborted, commands ignored until end of transaction block
+

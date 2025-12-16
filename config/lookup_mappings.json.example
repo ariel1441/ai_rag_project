@@ -1,0 +1,32 @@
+{
+  "_comment": "Example lookup mappings file. Copy to lookup_mappings.json and fill in actual values.",
+  "_instructions": "Get the actual type/status names from your original SQL Server database lookup tables.",
+  
+  "requesttypeid": {
+    "1": "Type 1 Name (Hebrew) - Get from RequestTypes table",
+    "2": "Type 2 Name (Hebrew) - Get from RequestTypes table",
+    "4": "תכנון",
+    "5": "Type 5 Name (Hebrew) - Get from RequestTypes table",
+    "6": "Type 6 Name (Hebrew) - Get from RequestTypes table"
+  },
+  
+  "requeststatusid": {
+    "1": "Status 1 Name (Hebrew) - Get from RequestStatuses table",
+    "4": "Status 4 Name (Hebrew) - Get from RequestStatuses table",
+    "8": "Status 8 Name (Hebrew) - Get from RequestStatuses table",
+    "9": "Status 9 Name (Hebrew) - Get from RequestStatuses table",
+    "10": "Status 10 Name (Hebrew) - Get from RequestStatuses table",
+    "12": "Status 12 Name (Hebrew) - Get from RequestStatuses table"
+  },
+  
+  "requesttypereasonid": {
+    "1": "Reason 1 Name (Hebrew) - Get from RequestTypeReasons table",
+    "3": "Reason 3 Name (Hebrew) - Get from RequestTypeReasons table",
+    "4": "Reason 4 Name (Hebrew) - Get from RequestTypeReasons table",
+    "11": "Reason 11 Name (Hebrew) - Get from RequestTypeReasons table",
+    "16": "Reason 16 Name (Hebrew) - Get from RequestTypeReasons table"
+  },
+  
+  "_note": "Add more mappings as needed. The system will use these to replace IDs with descriptive names in embeddings."
+}
+

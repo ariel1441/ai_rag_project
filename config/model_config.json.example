@@ -1,0 +1,9 @@
+{
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "llm_model": "mistralai/Mistral-7B-v0.1",
+  "base_model_for_finetuning": "mistralai/Mistral-7B-v0.1",
+  "max_chunk_size": 512,
+  "chunk_overlap": 50,
+  "top_k_retrieval": 5
+}
+

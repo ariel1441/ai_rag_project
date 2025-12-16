@@ -1,0 +1,97 @@
+{
+  "query_patterns": {
+    "person_queries": {
+      "patterns": ["מא", "של", "על ידי", "מאת", "מ-"],
+      "description": "Patterns that indicate person name queries (e.g., 'פניות מאX' = requests from X)",
+      "target_fields": ["updatedby", "createdby", "responsibleemployeename", "contactfirstname", "contactlastname"]
+    },
+    "project_queries": {
+      "patterns": ["פרויקט", "project", "שם פרויקט"],
+      "description": "Patterns that indicate project queries",
+      "target_fields": ["projectname", "projectdesc"]
+    },
+    "type_queries": {
+      "patterns": ["מסוג", "סוג", "type"],
+      "description": "Patterns that indicate type queries (e.g., 'מסוג 4' = type 4)",
+      "target_fields": ["requesttypeid"]
+    },
+    "status_queries": {
+      "patterns": ["סטטוס", "status", "מצב"],
+      "description": "Patterns that indicate status queries",
+      "target_fields": ["requeststatusid"]
+    },
+    "date_queries": {
+      "patterns": ["מ-", "עד", "מיום", "לפני", "אחרי", "בין", "last month", "last week"],
+      "description": "Patterns that indicate date range queries",
+      "target_fields": ["requeststatusdate", "createddate", "updatedate"]
+    },
+    "location_queries": {
+      "patterns": ["באזור", "במיקום", "קרוב ל", "near", "area"],
+      "description": "Patterns that indicate location queries",
+      "target_fields": ["areacenterx", "areacentery", "areadesc"]
+    }
+  },
+  "field_mappings": {
+    "מסוג": "requesttypeid",
+    "סוג": "requesttypeid",
+    "סטטוס": "requeststatusid",
+    "מצב": "requeststatusid",
+    "פרויקט": "projectname",
+    "שם פרויקט": "projectname",
+    "מאת": "createdby",
+    "מא": "updatedby",
+    "של": "updatedby",
+    "על ידי": "updatedby",
+    "אחראי": "responsibleemployeename",
+    "אחראית": "responsibleemployeename"
+  },
+  "query_types": {
+    "find": {
+      "patterns": ["תביא", "הראה", "מצא", "show", "find", "bring", "כל", "רשימה"],
+      "description": "User wants to find/see requests"
+    },
+    "count": {
+      "patterns": ["כמה", "מספר", "count", "how many"],
+      "description": "User wants to count requests"
+    },
+    "summarize": {
+      "patterns": ["סיכום", "תקציר", "סקירה", "summarize", "summary", "overview"],
+      "description": "User wants summary of requests"
+    },
+    "similar": {
+      "patterns": ["דומה", "דומות", "כמו", "similar", "like"],
+      "description": "User wants similar requests"
+    },
+    "urgent": {
+      "patterns": ["דחוף", "דחופה", "דחופות", "תאריך יעד", "deadline", "קרוב"],
+      "description": "User wants urgent/priority requests"
+    },
+    "answer_retrieval": {
+      "patterns": ["מענה דומה", "תשובה דומה", "answer from similar", "response from similar"],
+      "description": "User wants to retrieve answer from similar request"
+    }
+  },
+  "urgency_patterns": {
+    "patterns": ["דחוף", "דחופה", "דחופות", "דחיפות", "תאריך יעד", "deadline", "קרוב", "דורש תשובה"],
+    "description": "Patterns that indicate urgency/priority queries"
+  },
+  "project_entity_patterns": {
+    "patterns": ["פרויקט", "פרויקטים", "project", "projects"],
+    "description": "Patterns that indicate user is asking about projects (not requests)"
+  },
+  "request_entity_patterns": {
+    "patterns": ["פניות", "בקשות", "requests", "request"],
+    "description": "Patterns that indicate user is asking about requests"
+  },
+  "answer_retrieval_patterns": {
+    "patterns": ["מענה", "תשובה", "answer", "response", "מענה דומה", "תשובה דומה"],
+    "description": "Patterns that indicate user wants to retrieve answer from similar request"
+  },
+  "boost_rules": {
+    "exact_match_in_target_field": 2.0,
+    "exact_match_in_other_field": 1.5,
+    "semantic_match": 1.0,
+    "keyword_match": 1.2
+  }
+}
+

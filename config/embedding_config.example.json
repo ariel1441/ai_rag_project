@@ -1,0 +1,54 @@
+{
+  "database": {
+    "host": "localhost",
+    "port": 5433,
+    "database": "your_database",
+    "user": "postgres",
+    "password": "${POSTGRES_PASSWORD}"
+  },
+  "source": {
+    "table_name": "your_table",
+    "primary_key": "id",
+    "limit": null
+  },
+  "fields": {
+    "include_all": true,
+    "exclude": ["id", "created_at", "updated_at"],
+    "weights": {
+      "3.0x": [
+        "name",
+        "description",
+        "title"
+      ],
+      "2.0x": [
+        "category",
+        "status"
+      ],
+      "1.0x": [
+        "notes",
+        "remarks"
+      ]
+    },
+    "labels": {
+      "name": "Name",
+      "description": "Description",
+      "title": "Title"
+    }
+  },
+  "chunking": {
+    "max_chunk_size": 512,
+    "overlap": 50
+  },
+  "embedding": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "dimension": 384,
+    "batch_size": 32,
+    "normalize": true
+  },
+  "output": {
+    "table_name": "your_table_embeddings",
+    "create_index": true,
+    "index_lists": null
+  }
+}
+

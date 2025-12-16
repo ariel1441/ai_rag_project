@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Requests RAG System - Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 AI Requests Search System</h1>
+            <p class="subtitle">חיפוש חכם בבקשות באמצעות AI</p>
+        </header>
+
+        <div class="search-section">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="queryInput" 
+                    placeholder="הזן שאילתה בעברית או באנגלית... (לדוגמה: פניות מאור גלילי)"
+                    autocomplete="off"
+                >
+                <button id="searchBtn" onclick="performSearch()">חיפוש</button>
+            </div>
+
+            <div class="options">
+                <label title="מחפש בקשות במהירות, מציג רשימה ללא תשובה טקסטואלית">
+                    <input type="radio" name="searchType" value="search" checked>
+                    חיפוש בלבד (מהיר, ללא LLM)
+                </label>
+                <label title="מחפש עם טכנולוגיית RAG, מציג רשימה ללא תשובה טקסטואלית">
+                    <input type="radio" name="searchType" value="rag-no-llm">
+                    RAG - רק חיפוש (מהיר)
+                </label>
+                <label title="מחפש ומייצר תשובה טקסטואלית מלאה. איטי בפעם הראשונה (טוען מודל)">
+                    <input type="radio" name="searchType" value="rag-full">
+                    RAG - עם תשובה מלאה (איטי בפעם הראשונה)
+                </label>
+            </div>
+            <div style="margin-top: 10px; padding: 10px; background: #f0f0f0; border-radius: 5px; font-size: 0.9em; color: #666;">
+                <strong>💡 טיפ:</strong> 
+                <span id="optionHint">חיפוש מהיר - מציג רשימת בקשות ללא תשובה טקסטואלית</span>
+            </div>
+        </div>
+
+        <!-- Query History Feature (Optional) -->
+        <div id="queryHistoryPanel" class="query-history-panel hidden">
+            <div class="query-history-content">
+                <div id="recentQueries" class="query-section"></div>
+                <div id="favoriteQueries" class="query-section"></div>
+            </div>
+            <button onclick="toggleQueryHistory()" class="toggle-history-btn">✕</button>
+        </div>
+        <button onclick="toggleQueryHistory()" class="show-history-btn" title="הצג היסטוריית חיפושים">📜</button>
+
+        <div id="status" class="status hidden"></div>
+
+        <div id="results" class="results hidden">
+            <h2>תוצאות</h2>
+            <div id="resultsContent"></div>
+        </div>
+
+        <div id="answer" class="answer hidden">
+            <h2>תשובה</h2>
+            <div id="answerContent"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <!-- Query History Feature (Optional - can be removed if not needed) -->
+    <script src="query-history.js"></script>
+    <script>
+        // Toggle query history panel
+        function toggleQueryHistory() {
+            const panel = document.getElementById('queryHistoryPanel');
+            panel.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
+
