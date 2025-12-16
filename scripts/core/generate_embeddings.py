@@ -129,11 +129,8 @@ def main():
         
         # Load requests
         print("Step 5: Loading requests from database...")
-        # Column names from CSV import are lowercase and quoted, use exact name
-        cursor.execute("""
-            SELECT * FROM requests
-            ORDER BY "requestid";
-        """)
+        # Just get all requests (no ORDER BY to avoid column name issues)
+        cursor.execute("SELECT * FROM requests;")
         
         columns = [desc[0] for desc in cursor.description]
         requests = [dict(zip(columns, row)) for row in cursor.fetchall()]
