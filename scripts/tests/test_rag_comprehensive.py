@@ -1,230 +1,372 @@
 """
-Comprehensive RAG Testing Script
+Comprehensive RAG Test Script
+Tests all RAG query types with GPU-optimized system.
 
-Tests the RAG system with various example queries and compares results with CSV data.
+This script tests:
+1. Find queries (person, project, type, status)
+2. Count queries
+3. Summarize queries
+4. Similar requests queries
+5. Date-based queries
+6. Urgency queries
+7. Answer retrieval queries
+8. Complex multi-entity queries
+
+Uses GPU-optimized RAG system for fast, high-quality answers.
 """
-import sys
 import os
+import sys
+import time
 from pathlib import Path
-import pandas as pd
+from typing import Dict, List, Tuple
 
-# Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(project_root))
+sys.path.insert(0, str(project_root / "scripts"))
 
-from scripts.core.rag_query import RAGSystem
-from scripts.utils.hebrew import fix_hebrew_rtl
+# Try to load dotenv (optional)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
-def load_csv_data():
-    """Load request data from CSV for comparison."""
-    csv_path = Path(__file__).parent.parent.parent / "data" / "raw" / "request.csv"
-    if not csv_path.exists():
-        print(f"⚠️  CSV file not found at {csv_path}")
-        return None
+# Import GPU-optimized RAG system
+from scripts.core.rag_query_gpu import GPUOptimizedRAGSystem
+
+print("=" * 80)
+print("COMPREHENSIVE RAG TEST SUITE")
+print("=" * 80)
+print()
+print("Testing all RAG query types with GPU-optimized system")
+print("This will verify that RAG works correctly and uses GPU for fast responses")
+print()
+
+# Initialize RAG system
+print("Initializing RAG system...")
+print("  (This will load the LLM model - may take 1-2 minutes on first run)")
+print()
+
+rag_system = GPUOptimizedRAGSystem()
+
+# Check GPU
+import torch
+if torch.cuda.is_available():
+    print(f"✓ GPU detected: {torch.cuda.get_device_name(0)}")
+    print(f"  CUDA version: {torch.version.cuda}")
+    print(f"  GPU memory: {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f} GB")
+else:
+    print("⚠️  No GPU detected - will use CPU (slower)")
+print()
+
+# Test queries organized by type
+test_queries: List[Tuple[str, str, Dict]] = [
+    # ========================================================================
+    # FIND QUERIES (Person, Project, Type, Status)
+    # ========================================================================
+    ("find_person", "פניות מאור גלילי", {
+        "expected_intent": "person",
+        "expected_entity": "אור גלילי",
+        "description": "Find requests by person name"
+    }),
+    ("find_person", "בקשות מיניב ליבוביץ", {
+        "expected_intent": "person",
+        "expected_entity": "יניב ליבוביץ",
+        "description": "Find requests by person name (alternative name)"
+    }),
+    ("find_project", "פניות מפרויקט אלינור", {
+        "expected_intent": "project",
+        "description": "Find requests by project name"
+    }),
+    ("find_type", "פניות מסוג 4", {
+        "expected_intent": "type",
+        "expected_type_id": 4,
+        "description": "Find requests by type ID"
+    }),
+    ("find_status", "בקשות בסטטוס 1", {
+        "expected_intent": "status",
+        "expected_status_id": 1,
+        "description": "Find requests by status ID"
+    }),
+    ("find_multi", "פניות מאור גלילי מסוג 10", {
+        "expected_intent": "person",
+        "expected_entity": "אור גלילי",
+        "expected_type_id": 10,
+        "description": "Find requests with multiple filters (person + type)"
+    }),
+    
+    # ========================================================================
+    # COUNT QUERIES
+    # ========================================================================
+    ("count", "כמה פניות יש מאור גלילי?", {
+        "expected_intent": "person",
+        "expected_entity": "אור גלילי",
+        "description": "Count requests by person"
+    }),
+    ("count", "כמה בקשות יש מסוג 4?", {
+        "expected_intent": "type",
+        "expected_type_id": 4,
+        "description": "Count requests by type"
+    }),
+    ("count", "כמה פרויקטים יש לאור גלילי?", {
+        "expected_intent": "person",
+        "expected_entity": "אור גלילי",
+        "description": "Count projects (not requests) by person"
+    }),
+    
+    # ========================================================================
+    # SUMMARIZE QUERIES
+    # ========================================================================
+    ("summarize", "תביא לי סיכום של כל הפניות מסוג 4", {
+        "expected_intent": "type",
+        "expected_type_id": 4,
+        "description": "Summarize requests by type"
+    }),
+    ("summarize", "תן לי סיכום של פניות מאור גלילי", {
+        "expected_intent": "person",
+        "expected_entity": "אור גלילי",
+        "description": "Summarize requests by person"
+    }),
+    
+    # ========================================================================
+    # SIMILAR REQUESTS QUERIES
+    # ========================================================================
+    ("similar", "תביא לי פניות דומות ל-211000001", {
+        "expected_request_id": "211000001",
+        "description": "Find similar requests by ID"
+    }),
+    ("similar", "פניות דומות ל-211000226", {
+        "expected_request_id": "211000226",
+        "description": "Find similar requests (alternative format)"
+    }),
+    
+    # ========================================================================
+    # DATE-BASED QUERIES
+    # ========================================================================
+    ("date", "פניות מחודש האחרון", {
+        "description": "Find requests from last month"
+    }),
+    ("date", "בקשות מ-2024", {
+        "description": "Find requests from year 2024"
+    }),
+    
+    # ========================================================================
+    # URGENCY QUERIES
+    # ========================================================================
+    ("urgent", "בקשות דחופות", {
+        "expected_urgency": True,
+        "description": "Find urgent requests"
+    }),
+    ("urgent", "פניות דחופות מאור גלילי", {
+        "expected_intent": "person",
+        "expected_entity": "אור גלילי",
+        "expected_urgency": True,
+        "description": "Find urgent requests by person"
+    }),
+    
+    # ========================================================================
+    # ANSWER RETRIEVAL QUERIES
+    # ========================================================================
+    ("answer_retrieval", "מה התשובה שניתנה לפנייה 211000001?", {
+        "expected_request_id": "211000001",
+        "description": "Retrieve answer from similar requests"
+    }),
+    
+    # ========================================================================
+    # COMPLEX QUERIES
+    # ========================================================================
+    ("complex", "תביא לי סיכום של פניות דחופות מאור גלילי מסוג 10", {
+        "expected_intent": "person",
+        "expected_entity": "אור גלילי",
+        "expected_type_id": 10,
+        "expected_urgency": True,
+        "description": "Complex query: person + type + urgency + summarize"
+    }),
+    ("complex", "כמה פניות יש מאור גלילי בסטטוס 1?", {
+        "expected_intent": "person",
+        "expected_entity": "אור גלילי",
+        "expected_status_id": 1,
+        "description": "Complex query: person + status + count"
+    }),
+    
+    # ========================================================================
+    # GENERAL SEMANTIC QUERIES
+    # ========================================================================
+    ("general", "פניות שקשורות לתכנון", {
+        "description": "General semantic search"
+    }),
+    ("general", "בקשות עם בעיות", {
+        "description": "General semantic search (problem-related)"
+    }),
+]
+
+def test_single_query(query_type: str, query: str, metadata: Dict) -> Dict:
+    """Test a single RAG query and return results."""
+    print(f"Testing: {query}")
+    print(f"  Type: {query_type}")
+    print(f"  Description: {metadata.get('description', 'N/A')}")
+    
+    start_time = time.time()
     
     try:
-        df = pd.read_csv(csv_path, encoding='utf-8-sig')
-        print(f"✓ Loaded {len(df)} requests from CSV")
-        return df
+        # Run RAG query
+        result = rag_system.query(query)
+        
+        elapsed_time = time.time() - start_time
+        
+        # Extract information
+        answer = result.get('answer', '')
+        requests = result.get('requests', [])
+        query_info = result.get('query_info', {})
+        
+        # Check if GPU was used
+        import torch
+        used_gpu = torch.cuda.is_available() and result.get('used_gpu', False)
+        
+        # Verify expectations if provided
+        verification = {}
+        if 'expected_intent' in metadata:
+            actual_intent = query_info.get('intent', '')
+            verification['intent_match'] = actual_intent == metadata['expected_intent']
+        
+        if 'expected_entity' in metadata:
+            entities = query_info.get('entities', {})
+            person_name = entities.get('person_name', '')
+            verification['entity_match'] = metadata['expected_entity'] in person_name or person_name in metadata['expected_entity']
+        
+        return {
+            'success': True,
+            'query': query,
+            'query_type': query_type,
+            'answer': answer,
+            'num_requests': len(requests),
+            'query_info': query_info,
+            'elapsed_time': elapsed_time,
+            'used_gpu': used_gpu,
+            'verification': verification,
+            'error': None
+        }
+        
     except Exception as e:
-        print(f"❌ Error loading CSV: {e}")
-        return None
+        elapsed_time = time.time() - start_time
+        return {
+            'success': False,
+            'query': query,
+            'query_type': query_type,
+            'answer': None,
+            'num_requests': 0,
+            'query_info': {},
+            'elapsed_time': elapsed_time,
+            'used_gpu': False,
+            'verification': {},
+            'error': str(e)
+        }
 
-def verify_count_query(rag, query, csv_df, field_name, expected_value):
-    """Verify count queries by comparing with CSV data."""
-    print("\n" + "="*80)
-    print(f"TEST: {query}")
-    print("="*80)
-    
-    # Get actual count from CSV
-    if field_name == 'UpdatedBy':
-        actual_count = len(csv_df[csv_df['UpdatedBy'].str.contains(expected_value, na=False, case=False)])
-    elif field_name == 'CreatedBy':
-        actual_count = len(csv_df[csv_df['CreatedBy'].str.contains(expected_value, na=False, case=False)])
-    elif field_name == 'RequestTypeId':
-        actual_count = len(csv_df[csv_df['RequestTypeId'] == int(expected_value)])
+def print_result(result: Dict):
+    """Print formatted test result."""
+    if result['success']:
+        print(f"  ✓ Success ({result['elapsed_time']:.2f}s)")
+        if result['used_gpu']:
+            print(f"    GPU: ✓ Used")
+        else:
+            print(f"    GPU: ✗ Not used (CPU only)")
+        print(f"    Requests found: {result['num_requests']}")
+        print(f"    Answer length: {len(result['answer'])} chars")
+        if result['answer']:
+            print(f"    Answer preview: {result['answer'][:100]}...")
+        
+        # Verification results
+        if result['verification']:
+            for check, passed in result['verification'].items():
+                status = "✓" if passed else "✗"
+                print(f"    {status} {check}: {passed}")
     else:
-        actual_count = None
+        print(f"  ✗ Failed ({result['elapsed_time']:.2f}s)")
+        print(f"    Error: {result['error']}")
+    print()
+
+# Run all tests
+print("=" * 80)
+print("RUNNING TESTS")
+print("=" * 80)
+print()
+
+results = []
+for query_type, query, metadata in test_queries:
+    result = test_single_query(query_type, query, metadata)
+    results.append(result)
+    print_result(result)
+    print("-" * 80)
+    print()
+
+# Summary
+print("=" * 80)
+print("TEST SUMMARY")
+print("=" * 80)
+print()
+
+total_tests = len(results)
+successful_tests = sum(1 for r in results if r['success'])
+failed_tests = total_tests - successful_tests
+
+print(f"Total tests: {total_tests}")
+print(f"Successful: {successful_tests} ({successful_tests*100/total_tests:.1f}%)")
+print(f"Failed: {failed_tests} ({failed_tests*100/total_tests:.1f}%)")
+print()
+
+# Timing statistics
+if successful_tests > 0:
+    successful_results = [r for r in results if r['success']]
+    avg_time = sum(r['elapsed_time'] for r in successful_results) / len(successful_results)
+    min_time = min(r['elapsed_time'] for r in successful_results)
+    max_time = max(r['elapsed_time'] for r in successful_results)
     
-    print(f"Expected count (from CSV): {actual_count}")
+    print(f"Timing (successful tests only):")
+    print(f"  Average: {avg_time:.2f}s")
+    print(f"  Min: {min_time:.2f}s")
+    print(f"  Max: {max_time:.2f}s")
     print()
     
-    # Run RAG query
-    try:
-        result = rag.query(query, top_k=20)
-        
-        print("\n" + "-"*80)
-        print("RAG ANSWER:")
-        print("-"*80)
-        print(fix_hebrew_rtl(result['answer']))
-        print()
-        
-        print("-"*80)
-        print(f"RETRIEVED REQUESTS: {len(result['requests'])}")
-        print("-"*80)
-        for i, req in enumerate(result['requests'][:5], 1):
-            print(f"{i}. Request {req['requestid']} - {req.get('projectname', 'N/A')}")
-            if req.get('updatedby'):
-                print(f"   Updated By: {fix_hebrew_rtl(str(req['updatedby']))}")
-            if req.get('createdby'):
-                print(f"   Created By: {fix_hebrew_rtl(str(req['createdby']))}")
-            print(f"   Similarity: {req.get('similarity', 0):.4f}")
-            print()
-        
-        # Check if answer contains the count
-        answer_lower = result['answer'].lower()
-        if actual_count and str(actual_count) in answer_lower:
-            print(f"✅ Answer contains expected count: {actual_count}")
-        elif actual_count:
-            print(f"⚠️  Answer doesn't contain expected count {actual_count}")
-            print(f"   Answer: {result['answer'][:200]}...")
-        
-        return result
-        
-    except Exception as e:
-        print(f"❌ Error: {e}")
-        import traceback
-        traceback.print_exc()
-        return None
-
-def test_rag_system():
-    """Run comprehensive tests on RAG system."""
-    print("="*80)
-    print("COMPREHENSIVE RAG SYSTEM TESTING")
-    print("="*80)
+    # GPU usage
+    gpu_used_count = sum(1 for r in successful_results if r['used_gpu'])
+    print(f"GPU usage:")
+    print(f"  Used GPU: {gpu_used_count}/{len(successful_results)} tests")
+    print(f"  CPU only: {len(successful_results) - gpu_used_count}/{len(successful_results)} tests")
     print()
-    
-    # Load CSV data for comparison
-    csv_df = load_csv_data()
-    if csv_df is None:
-        print("⚠️  Continuing without CSV comparison...")
-    
-    # Initialize RAG system
-    print("Initializing RAG system...")
-    rag = RAGSystem()
-    
-    try:
-        # Connect to database
-        print("Connecting to database...")
-        rag.connect_db()
-        print("✓ Database connected")
-        print()
-        
-        # Load model (will be done on first query if not loaded)
-        print("Note: Model will be loaded on first query (takes 30-60 seconds)")
-        print()
-        
-        # Test queries based on examples from documentation
-        test_queries = [
-            # Count queries
-            {
-                'query': 'כמה פניות יש מיניב ליבוביץ?',
-                'type': 'count',
-                'field': 'UpdatedBy',
-                'value': 'יניב ליבוביץ',
-                'description': 'Count requests from יניב ליבוביץ'
-            },
-            {
-                'query': 'כמה פניות יש מאוקסנה כלפון?',
-                'type': 'count',
-                'field': 'UpdatedBy',
-                'value': 'אוקסנה כלפון',
-                'description': 'Count requests from אוקסנה כלפון'
-            },
-            {
-                'query': 'כמה בקשות יש מסוג 4?',
-                'type': 'count',
-                'field': 'RequestTypeId',
-                'value': '4',
-                'description': 'Count requests of type 4'
-            },
-            # Find queries
-            {
-                'query': 'תביא לי פניות מיניב ליבוביץ',
-                'type': 'find',
-                'field': 'UpdatedBy',
-                'value': 'יניב ליבוביץ',
-                'description': 'Find requests from יניב ליבוביץ'
-            },
-            {
-                'query': 'תביא לי פניות מסוג 1',
-                'type': 'find',
-                'field': 'RequestTypeId',
-                'value': '1',
-                'description': 'Find requests of type 1'
-            },
-            # Summarize queries
-            {
-                'query': 'תביא לי סיכום של כל הפניות מסוג 2',
-                'type': 'summarize',
-                'field': 'RequestTypeId',
-                'value': '2',
-                'description': 'Summarize requests of type 2'
-            },
-        ]
-        
-        results = []
-        
-        for i, test_case in enumerate(test_queries, 1):
-            print(f"\n{'='*80}")
-            print(f"TEST {i}/{len(test_queries)}: {test_case['description']}")
-            print(f"{'='*80}")
-            
-            if csv_df is not None:
-                result = verify_count_query(
-                    rag, 
-                    test_case['query'],
-                    csv_df,
-                    test_case['field'],
-                    test_case['value']
-                )
-            else:
-                # Just run the query without CSV comparison
-                print(f"Query: {fix_hebrew_rtl(test_case['query'])}")
-                print()
-                try:
-                    result = rag.query(test_case['query'], top_k=20)
-                    print("\n" + "-"*80)
-                    print("RAG ANSWER:")
-                    print("-"*80)
-                    print(fix_hebrew_rtl(result['answer']))
-                    print()
-                except Exception as e:
-                    print(f"❌ Error: {e}")
-                    import traceback
-                    traceback.print_exc()
-                    result = None
-            
-            results.append({
-                'test_case': test_case,
-                'result': result
-            })
-            
-            # Small delay between queries
-            import time
-            time.sleep(1)
-        
-        # Summary
-        print("\n" + "="*80)
-        print("TEST SUMMARY")
-        print("="*80)
-        
-        successful = sum(1 for r in results if r['result'] is not None)
-        print(f"Successful tests: {successful}/{len(test_queries)}")
-        
-        for i, r in enumerate(results, 1):
-            status = "✅" if r['result'] is not None else "❌"
-            print(f"{status} Test {i}: {r['test_case']['description']}")
-        
-    except KeyboardInterrupt:
-        print("\n\n⚠️  Testing interrupted by user")
-    except Exception as e:
-        print(f"\n❌ Error during testing: {e}")
-        import traceback
-        traceback.print_exc()
-    finally:
-        rag.close()
-        print("\n✓ RAG system closed")
 
-if __name__ == "__main__":
-    test_rag_system()
+# Query type breakdown
+print("Results by query type:")
+query_type_counts = {}
+for result in results:
+    qtype = result['query_type']
+    if qtype not in query_type_counts:
+        query_type_counts[qtype] = {'total': 0, 'success': 0}
+    query_type_counts[qtype]['total'] += 1
+    if result['success']:
+        query_type_counts[qtype]['success'] += 1
 
+for qtype, counts in sorted(query_type_counts.items()):
+    success_rate = counts['success'] * 100 / counts['total']
+    print(f"  {qtype}: {counts['success']}/{counts['total']} ({success_rate:.1f}%)")
+print()
+
+# Failed tests details
+if failed_tests > 0:
+    print("Failed tests:")
+    for result in results:
+        if not result['success']:
+            print(f"  ✗ {result['query']}")
+            print(f"    Error: {result['error']}")
+    print()
+
+print("=" * 80)
+print("TEST COMPLETE")
+print("=" * 80)
+print()
+print("Next steps:")
+print("1. Review the results above")
+print("2. Check if GPU was used (should be faster)")
+print("3. Verify answers make sense")
+print("4. Test manually via web interface (see instructions)")
+print()
