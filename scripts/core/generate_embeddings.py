@@ -176,8 +176,17 @@ def main():
         print()
         documents = []
         
+        # Get the ID column name (same as above, reuse id_column from earlier)
+        id_column_lower = id_column.lower()
+        
         for req in tqdm(requests, desc="Preparing documents"):
-            request_id = str(req['requestid']) if req['requestid'] else None
+            # Try different possible column names
+            request_id = None
+            for col_name in [id_column, id_column_lower, 'requestid', 'request_id', 'id']:
+                if col_name in req:
+                    request_id = str(req[col_name]) if req[col_name] else None
+                    break
+            
             if not request_id:
                 continue
             
