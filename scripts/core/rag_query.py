@@ -1415,7 +1415,9 @@ class RAGSystem:
                 # ====================================================================
                 
                 # CPU optimization flag - set to False to use optimal settings
-                USE_CPU_OPTIMIZATION = (device == "cpu")
+                # Changed: Only use CPU optimizations if explicitly on CPU AND no GPU available
+                # For GPU systems, always use optimal settings
+                USE_CPU_OPTIMIZATION = (device == "cpu" and not self._has_gpu())
                 
                 # CPU-optimized settings (faster but less optimal)
                 if USE_CPU_OPTIMIZATION:
