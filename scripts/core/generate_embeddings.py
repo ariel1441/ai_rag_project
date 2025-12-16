@@ -164,12 +164,8 @@ def main():
         id_column_lower = id_column.lower()
         
         for req in tqdm(requests, desc="Preparing documents"):
-            # Try different possible column names
-            request_id = None
-            for col_name in [id_column, id_column_lower, 'requestid', 'request_id', 'id']:
-                if col_name in req:
-                    request_id = str(req[col_name]) if req[col_name] else None
-                    break
+            # Get request ID - column name is 'requestid' (lowercase from CSV import)
+            request_id = str(req['requestid']) if req.get('requestid') else None
             
             if not request_id:
                 continue
