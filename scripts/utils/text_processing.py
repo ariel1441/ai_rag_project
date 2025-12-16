@@ -58,37 +58,53 @@ def combine_text_fields_weighted(request: Dict) -> str:
     fields = []
     
     # Helper function to safely get value (handles BOM and case variations)
+    # IMPROVED: More robust matching to handle CSV import variations
     def get_value(key):
-        # Try exact match first
-        value = request.get(key)
+        # Normalize the key we're looking for
+        key_lower = key.lower().strip()
         
-        # Try lowercase
-        if value is None:
-            value = request.get(key.lower())
+        # Strategy 1: Try exact matches (original key, lowercase, with/without BOM)
+        candidates = [
+            key,  # Original
+            key.lower(),  # Lowercase
+            '\ufeff' + key,  # With BOM prefix
+            '\ufeff' + key.lower(),  # BOM + lowercase
+            key.upper(),  # Uppercase (some DBs use uppercase)
+        ]
         
-        # Try with BOM (in case first column has BOM)
-        if value is None:
-            bom_key = '\ufeff' + key
-            value = request.get(bom_key) or request.get(bom_key.lower())
+        for candidate in candidates:
+            value = request.get(candidate)
+            if value is not None:
+                value_str = str(value).strip()
+                if value_str and value_str.upper() not in ('NULL', 'NONE', ''):
+                    return value_str
         
-        # Try all keys case-insensitively (for CSV import variations)
-        if value is None:
-            key_lower = key.lower()
-            for req_key in request.keys():
-                # Remove BOM and compare
-                clean_key = req_key.lstrip('\ufeff').strip().lower()
-                if clean_key == key_lower:
-                    value = request[req_key]
-                    break
+        # Strategy 2: Iterate through all keys and match case-insensitively
+        # This handles any variations in column names from CSV import
+        for req_key in request.keys():
+            # Remove BOM, strip, and compare case-insensitively
+            clean_req_key = req_key.lstrip('\ufeff').strip()
+            if clean_req_key.lower() == key_lower:
+                value = request[req_key]
+                if value is not None:
+                    value_str = str(value).strip()
+                    if value_str and value_str.upper() not in ('NULL', 'NONE', ''):
+                        return value_str
         
-        if value is None:
-            return None
-        # Convert to string and strip
-        value_str = str(value).strip()
-        # Skip empty, NULL, or None strings
-        if not value_str or value_str.upper() in ('NULL', 'NONE', ''):
-            return None
-        return value_str
+        # Strategy 3: Try partial matches (for cases like "requestid" vs "request_id")
+        # Only if exact match failed
+        key_no_underscore = key_lower.replace('_', '').replace('-', '')
+        for req_key in request.keys():
+            clean_req_key = req_key.lstrip('\ufeff').strip().lower()
+            clean_req_key_no_underscore = clean_req_key.replace('_', '').replace('-', '')
+            if clean_req_key_no_underscore == key_no_underscore:
+                value = request[req_key]
+                if value is not None:
+                    value_str = str(value).strip()
+                    if value_str and value_str.upper() not in ('NULL', 'NONE', ''):
+                        return value_str
+        
+        return None
     
     # ============================================================================
     # WEIGHT 3.0x (Repeat 3 times - HIGHEST PRIORITY)

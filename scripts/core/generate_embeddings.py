@@ -190,15 +190,36 @@ def main():
             print("❌ ERROR: Could not find requestid column!")
             return 1
         
+        # Diagnostic: Check field matching on first request
+        if requests:
+            sample_req = requests[0]
+            sample_combined = combine_text_fields_weighted(sample_req)
+            sample_chunks = chunk_text(sample_combined, max_chunk_size=512, overlap=50)
+            print(f"  Sample request text length: {len(sample_combined)} chars")
+            print(f"  Sample request chunks: {len(sample_chunks)}")
+            if len(sample_combined) < 200:
+                print(f"  ⚠️  WARNING: Sample text is very short! This suggests many fields are missing.")
+                print(f"  Sample text: {sample_combined[:300]}")
+            print()
+        
+        skipped_requests = 0
+        empty_text_requests = 0
+        
         for req in tqdm(requests, desc="Preparing documents"):
             # Get request ID using the original column name (with BOM if present)
             request_id = str(req[id_col_original]) if req.get(id_col_original) else None
             
             if not request_id:
+                skipped_requests += 1
                 continue
             
             # Combine text fields using weighted version (includes ~44 fields)
             combined_text = combine_text_fields_weighted(req)
+            
+            # Skip if text is empty
+            if not combined_text or not combined_text.strip():
+                empty_text_requests += 1
+                continue
             
             # Chunk if necessary
             # Note: 512 is standard for embedding models (token/character limit)
@@ -219,6 +240,10 @@ def main():
         
         logger.info(f"Created {len(documents)} document chunks")
         print(f"✓ Created {len(documents):,} document chunks")
+        if skipped_requests > 0:
+            print(f"  ⚠️  Skipped {skipped_requests} requests (no ID)")
+        if empty_text_requests > 0:
+            print(f"  ⚠️  Skipped {empty_text_requests} requests (empty text - fields not found?)")
         print()
         
         # Generate embeddings
