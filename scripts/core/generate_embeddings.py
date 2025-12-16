@@ -133,7 +133,24 @@ def main():
         cursor.execute("SELECT * FROM requests;")
         
         columns = [desc[0] for desc in cursor.description]
-        requests = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        requests_data = cursor.fetchall()
+        requests = [dict(zip(columns, row)) for row in requests_data]
+        
+        # Debug: show first column names
+        if columns:
+            print(f"   First few columns: {columns[:5]}")
+            # Find the ID column
+            id_col = None
+            for col in columns:
+                if col.lower() == 'requestid':
+                    id_col = col
+                    break
+            if id_col:
+                print(f"   Found ID column: '{id_col}'")
+            else:
+                print(f"   ⚠️  Warning: Could not find requestid column")
+                print(f"   Available columns: {columns[:10]}")
+        
         print(f"✓ Loaded {len(requests):,} requests from database")
         logger.info(f"Loaded {len(requests)} requests")
         print()
@@ -157,12 +174,21 @@ def main():
         print()
         documents = []
         
-        # Get the ID column name (same as above, reuse id_column from earlier)
-        id_column_lower = id_column.lower()
+        # Find the actual ID column name from the columns we got
+        id_column_name = None
+        for col in columns:
+            if col.lower() == 'requestid':
+                id_column_name = col
+                break
+        
+        if not id_column_name:
+            print("❌ ERROR: Could not find requestid column!")
+            print(f"   Available columns: {columns[:10]}")
+            return 1
         
         for req in tqdm(requests, desc="Preparing documents"):
-            # Get request ID - column name is 'requestid' (lowercase from CSV import)
-            request_id = str(req['requestid']) if req.get('requestid') else None
+            # Get request ID using the actual column name from database
+            request_id = str(req[id_column_name]) if req.get(id_column_name) else None
             
             if not request_id:
                 continue
