@@ -129,10 +129,10 @@ def main():
         
         # Load requests
         print("Step 5: Loading requests from database...")
-        # Just use requestid directly (we know it exists from the check)
+        # Column names from CSV import are lowercase and quoted, use exact name
         cursor.execute("""
             SELECT * FROM requests
-            ORDER BY requestid;
+            ORDER BY "requestid";
         """)
         
         columns = [desc[0] for desc in cursor.description]
