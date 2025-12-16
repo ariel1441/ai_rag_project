@@ -63,7 +63,13 @@ def create_table_from_csv(conn, csv_path, table_name):
         # Import data
         print(f"   Importing data...")
         placeholders = ','.join(['%s'] * len(headers))
-        insert_sql = f'INSERT INTO {table_name} ({", ".join([f\'"{h.strip().replace(" ", "_").replace("-", "_").lower()}"\' for h in headers])}) VALUES ({placeholders})'
+        # Clean column names for SQL
+        clean_headers = []
+        for h in headers:
+            clean_name = h.strip().replace(" ", "_").replace("-", "_").lower()
+            clean_headers.append(f'"{clean_name}"')
+        column_names = ', '.join(clean_headers)
+        insert_sql = f'INSERT INTO {table_name} ({column_names}) VALUES ({placeholders})'
         
         row_count = 0
         for row in reader:
