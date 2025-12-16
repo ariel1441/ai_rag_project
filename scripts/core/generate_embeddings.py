@@ -129,44 +129,10 @@ def main():
         
         # Load requests
         print("Step 5: Loading requests from database...")
-        # First get ALL column names to find the ID column
+        # Just use requestid directly (we know it exists from the check)
         cursor.execute("""
-            SELECT column_name 
-            FROM information_schema.columns 
-            WHERE table_schema = 'public' 
-            AND table_name = 'requests'
-            ORDER BY ordinal_position;
-        """)
-        all_columns = [row[0] for row in cursor.fetchall()]
-        
-        # Find ID column (try different variations, case-insensitive)
-        id_column = None
-        for col in all_columns:
-            col_lower = col.lower()
-            if col_lower in ['requestid', 'request_id', 'id', 'request id']:
-                id_column = col
-                break
-        
-        # If still not found, use first column or any column with 'id' in name
-        if not id_column:
-            for col in all_columns:
-                if 'id' in col.lower():
-                    id_column = col
-                    break
-        
-        # Last resort: use first column
-        if not id_column and all_columns:
-            id_column = all_columns[0]
-        
-        if not id_column:
-            print("❌ ERROR: Could not find ID column in requests table!")
-            print(f"   Available columns: {', '.join(all_columns)}")
-            return 1
-        
-        print(f"   Using ID column: {id_column}")
-        cursor.execute(f"""
             SELECT * FROM requests
-            ORDER BY "{id_column}";
+            ORDER BY requestid;
         """)
         
         columns = [desc[0] for desc in cursor.description]
