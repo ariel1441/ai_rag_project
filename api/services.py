@@ -10,10 +10,18 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 sys.path.insert(0, str(project_root / "scripts"))
 
-# Use GPU-optimized RAG system if available, fallback to regular
+# Use GPU-optimized RAG system if GPU is available, fallback to regular (CPU-optimized)
 try:
-    from scripts.core.rag_query_gpu import GPUOptimizedRAGSystem as RAGSystem
-except ImportError:
+    import torch
+    has_gpu = torch.cuda.is_available()
+    if has_gpu:
+        # GPU available - use GPU-optimized version
+        from scripts.core.rag_query_gpu import GPUOptimizedRAGSystem as RAGSystem
+    else:
+        # No GPU - use CPU-optimized version
+        from scripts.core.rag_query import RAGSystem
+except (ImportError, Exception):
+    # Fallback to regular RAG system if anything fails
     from scripts.core.rag_query import RAGSystem
 from scripts.utils.query_parser import QueryParser
 import psycopg2
